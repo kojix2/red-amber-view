@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 
-  spec.summary       = ''
-  spec.description   = ''
+  spec.summary       = 'A Data Viewer for RedAmber'
+  spec.description   = 'A Data Viewer for RedAmber. Opens a window and displays a spreadsheet-like table.'
   spec.homepage      = 'https://github.com/kojix2/red-amber-view'
   spec.license       = 'MIT'
 
@@ -18,4 +18,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'libui'
   spec.add_runtime_dependency 'red_amber'
+  spec.add_runtime_dependency 'red-arrow'
 end
