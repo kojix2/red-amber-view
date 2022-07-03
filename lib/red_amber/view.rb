@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'red_amber'
+require_relative 'view/version'
 
 module RedAmber
   module View
