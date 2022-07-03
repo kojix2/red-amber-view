@@ -5,4 +5,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in youplot.gemspec
 gemspec
 
-gem 'red-datasets-arrow'
+group :test do
+  gem 'rake'
+  gem 'test-unit'
+  gem 'red-datasets-arrow'
+end

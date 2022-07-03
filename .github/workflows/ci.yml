@@ -9,6 +9,18 @@ jobs:
         os:   ['ubuntu', 'macos']
         ruby: [ '2.7', '3.0', '3.1']
     steps:
+      - name: Prepare Apache Arrow (Ubuntu)
+        if: ${{ matrix.os == 'ubuntu' }}
+        run: |
+          sudo apt update
+          sudo apt install -y -V ca-certificates lsb-release wget
+          wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+          sudo apt install -y -V ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+          sudo apt update
+      - name: Prepare Apache Arrow (macOS)
+        if: ${{ matrix.os == 'macos' }}
+        run: |
+          brew install apache-arrow-glib
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
