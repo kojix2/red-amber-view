@@ -1,5 +1,8 @@
 # RedAmber View
 
+[![Gem Version](https://badge.fury.io/rb/red-amber-view.svg)](https://badge.fury.io/rb/red-amber-view)
+[![test](https://github.com/kojix2/red-amber-view/actions/workflows/ci.yml/badge.svg)](https://github.com/kojix2/red-amber-view/actions/workflows/ci.yml)
+
 R's `View()` for [RedAmber](https://github.com/heronshoes/red_amber).
 
 ## Installation
