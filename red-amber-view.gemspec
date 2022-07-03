@@ -13,7 +13,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/kojix2/red-amber-view'
   spec.license       = 'MIT'
 
-  spec.files         = Dir['*.{md,txt}', '{lib}/**/*', 'scripts/table-viewer.rb']
+  spec.files         = Dir['*.{md,txt}', '{lib}/**/*', 'exe/arrow_table_view.rb']
+  # spec.bindir      = 'exe'
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'libui'

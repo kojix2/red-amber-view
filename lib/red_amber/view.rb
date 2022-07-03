@@ -7,10 +7,15 @@ module RedAmber
     DataFrame.include(self)
 
     def view
-      path = '/dev/shm/red-amber-view.arrow'
+      require 'securerandom'
+      rand = SecureRandom.hex(10)
+      path = "/dev/shm/red-amber-view-#{rand}.arrow"
+      while File.exist? path
+        path = "/dev/shm/red-amber-view-#{rand}.arrow"
+      end
       to_arrow.save(path)
-      tableviewer = File.expand_path('../../scripts/table-viewer.rb', __dir__)
-      pid = spawn("ruby #{tableviewer} #{path}")
+      arrow_table_viewer = File.expand_path('../../exe/arrow_table_view.rb', __dir__)
+      pid = spawn("ruby #{arrow_table_viewer} #{path}")
       Process.detach(pid)
     end
   end
