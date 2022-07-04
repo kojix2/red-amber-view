@@ -8,7 +8,10 @@ module RedAmber
     DataFrame.include(self)
 
     # Invokes a spreadsheet-style data viewer
-    def view(title = nil)
+    # @param [String] title A title for a viewer window.
+    # @return [Thread] A Thread that monitors the child process.
+
+    def view(title = 'RedAmber View')
       # Linux
       if Dir.exist?('/dev/shm')
         require 'securerandom'
@@ -33,7 +36,7 @@ module RedAmber
         save_succeeded = to_arrow.save(path)
       end
 
-      pid = spawn(RbConfig.ruby, arrow_table_viewer, tf.path)
+      pid = spawn(RbConfig.ruby, arrow_table_viewer, tf.path, title)
       Process.detach(pid)
     end
 

@@ -3,7 +3,7 @@
 require 'libui'
 require 'arrow'
 
-WINDOW_TITLE  = 'RedAmber View'
+WINDOW_TITLE  = ARGV[1]
 WINDOW_WIDTH  = 600
 WINDOW_HEIGHT = 400
 
