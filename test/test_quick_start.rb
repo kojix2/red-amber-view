@@ -11,6 +11,6 @@ class QuickStartTest < Test::Unit::TestCase
     penguins = RedAmber::DataFrame.new(arrow)
     pid = penguins.view
     sleep 3
-    Process.kill(:SIGTERM, pid)
+    Process.kill(:KILL, pid)
   end
 end
