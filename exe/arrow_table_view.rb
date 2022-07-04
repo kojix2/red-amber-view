@@ -8,8 +8,8 @@ WINDOW_WIDTH  = 600
 WINDOW_HEIGHT = 400
 
 ARROW_PATH = ARGV[0]
-rm_arrow_file = proc { File.exist?(ARROW_PATH) && File.delete(ARROW_PATH) }
-at_exit(&rm_arrow_file)
+arrow_table = Arrow::Table.load(ARROW_PATH)
+File.unlink(ARROW_PATH)
 
 LibUI.init
 
@@ -18,7 +18,6 @@ main_window = LibUI.new_window(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, 1)
 hbox = LibUI.new_horizontal_box
 LibUI.window_set_child(main_window, hbox)
 
-arrow_table = Arrow::Table.load(ARROW_PATH)
 ncol = arrow_table.n_columns
 nrow = arrow_table.n_rows
 
@@ -59,7 +58,6 @@ LibUI.box_append(hbox, table, 1)
 LibUI.control_show(main_window)
 
 LibUI.window_on_closing(main_window) do
-  rm_arrow_file.call
   LibUI.control_destroy(main_window)
   LibUI.free_table_model(model)
   LibUI.quit
