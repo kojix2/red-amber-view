@@ -9,19 +9,20 @@ module RedAmber
 
     # Invokes a spreadsheet-style data viewer
     # @param [String] title A title for a viewer window.
-    # @return [Thread] A Thread that monitors the child process.
+    # @return [Integer] The pid of the child process.
 
     def view(title = 'RedAmber View')
+      arrow_path = nil
+
       # Linux
       if Dir.exist?('/dev/shm')
         require 'securerandom'
-        path = nil
         loop do
-          path = "/dev/shm/red-amber-view-#{SecureRandom.hex(8)}.arrow"
-          break unless File.exist? path
+          arrow_path = "/dev/shm/red-amber-view-#{SecureRandom.hex(8)}.arrow"
+          break unless File.exist? arrow_path
         end
         begin
-          save_succeeded = to_arrow.save(path)
+          save_succeeded = to_arrow.save(arrow_path)
         rescue StandardError => e
           warn e.message
         end
@@ -32,12 +33,13 @@ module RedAmber
         require 'tempfile'
         # The tempfile will be removed by the spawned process.
         tf = Tempfile.create(['red-amber-view', '.arrow'])
-        path = tf.path
-        save_succeeded = to_arrow.save(path)
+        arrow_path = tf.path
+        save_succeeded = to_arrow.save(arrow_path)
       end
 
-      pid = spawn(RbConfig.ruby, arrow_table_viewer, tf.path, title)
-      Process.detach(pid)
+      raise 'Failed to save arrow file' unless save_succeeded
+
+      spawn(RbConfig.ruby, arrow_table_viewer, arrow_path, title)
     end
 
     private

@@ -27,4 +27,7 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - run: gem install bundler
       - run: bundle install
-      - run: bundle exec rake test
+      - name: Rake test (XVFB)
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: bundle exec rake test
