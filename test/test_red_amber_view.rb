@@ -1,4 +1,6 @@
-require_relative "test_helper"
+# frozen_string_literal: true
+
+require_relative 'test_helper'
 
 class RedAmberView < Test::Unit::TestCase
   test 'it_has_a_version_number' do

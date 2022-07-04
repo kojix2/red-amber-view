@@ -7,6 +7,6 @@ gemspec
 
 group :test do
   gem 'rake'
-  gem 'test-unit'
   gem 'red-datasets-arrow'
+  gem 'test-unit'
 end
