@@ -32,12 +32,22 @@ end
 
 model_handler = LibUI::FFI::TableModelHandler.malloc
 model_handler.to_ptr.free = Fiddle::RUBY_FREE
-model_handler.NumColumns   = rbcallback(4) { ncol }
-model_handler.ColumnType   = rbcallback(4) { 0 }
+model_handler.NumColumns   = rbcallback(4) { ncol + 2 }
+model_handler.ColumnType   = rbcallback(4, [1, 1, 4]) do |_, _, col|
+  col.zero? ? 3 : 0
+end
 model_handler.NumRows      = rbcallback(4) { nrow }
-model_handler.CellValue    = rbcallback(1, [1, 1, 4, 4]) do |_, _, row, column|
-  str = arrow_table.get_column_data(column)[row].to_s
-  LibUI.new_table_value_string(str)
+model_handler.CellValue    = rbcallback(1, [1, 1, 4, 4]) do |_, _, row, col|
+  case col
+  when 0
+    LibUI.new_table_value_color(0.5, 0.5, 0.5, 0.5)
+  when 1
+    LibUI.new_table_value_string(row.to_s)
+  else
+    v = arrow_table.get_column_data(col - 2)[row]
+    s = v.to_s
+    LibUI.new_table_value_string(s)
+  end
 end
 model_handler.SetCellValue = rbcallback(0, [0]) {}
 
@@ -48,10 +58,15 @@ table_params.to_ptr.free = Fiddle::RUBY_FREE
 table_params.Model = model
 table_params.RowBackgroundColorModelColumn = -1
 
+tp = LibUI::FFI::TableTextColumnOptionalParams.malloc
+tp.to_ptr.free = Fiddle::RUBY_FREE
+tp.ColorModelColumn = 0
+
 table = LibUI.new_table(table_params)
-arrow_table.columns.map.with_index do |column, i|
-  name = column.name.to_s
-  LibUI.table_append_text_column(table, name, i, -1)
+LibUI.table_append_text_column(table, '', 1, -1, tp)
+arrow_table.columns.map.with_index do |col, i|
+  name = col.name.to_s
+  LibUI.table_append_text_column(table, name, i + 2, -1)
 end
 
 LibUI.box_append(hbox, table, 1)
