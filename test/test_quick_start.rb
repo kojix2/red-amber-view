@@ -10,7 +10,9 @@ class QuickStartTest < Test::Unit::TestCase
     arrow = Datasets::Penguins.new.to_arrow
     penguins = RedAmber::DataFrame.new(arrow)
     pid = penguins.view
-    sleep 3
+    thr = Process.detach(pid)
+    sleep 2.5
+    assert_true thr.alive?
     Process.kill(:KILL, pid)
   end
 end
