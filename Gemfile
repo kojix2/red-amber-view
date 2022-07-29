@@ -9,4 +9,5 @@ group :test do
   gem 'rake'
   gem 'red-datasets-arrow'
   gem 'test-unit'
+  gem 'rover-df'
 end
