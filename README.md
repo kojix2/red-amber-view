@@ -20,7 +20,7 @@ require 'datasets-arrow'
 
 arrow = Datasets::Penguins.new.to_arrow
 penguins = RedAmber::DataFrame.new(arrow)
-penguins.view
+penguins.view # Return the pid of the child process.
 ```
 
 ![screenshot](https://user-images.githubusercontent.com/5798442/177008662-5a3bb1c2-fbd3-48ea-8f1a-fa3164002a08.png)
